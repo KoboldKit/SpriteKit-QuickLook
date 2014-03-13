@@ -29,6 +29,64 @@ static NSString* NSShortStringFromCGPoint(CGPoint p)
 	return [NSString stringWithFormat:@"{%.2f, %.2f}", p.x, p.y];
 }
 
+static void dumpIvarNamesForClass(Class klass)
+{
+	NSMutableString* names = [NSMutableString stringWithFormat:@"%@ ivars:\n", NSStringFromClass(klass)];
+	
+	unsigned int count = 0;
+	Ivar* ivars = class_copyIvarList(klass, &count);
+	for (unsigned int i = 0; i < count; i++)
+	{
+		[names appendFormat:@"%s (%s)\n", ivar_getName(ivars[i]), ivar_getTypeEncoding(ivars[i])];
+	}
+	
+	NSLog(@"%@\n", names);
+}
+
+@implementation QuickLookHelper
+
+-(id) init
+{
+	self = [super init];
+	if (self)
+	{
+		dumpIvarNamesForClass([SKAction class]);
+		dumpIvarNamesForClass([SKKeyframeSequence class]);
+		dumpIvarNamesForClass([SKTexture class]);
+		dumpIvarNamesForClass([SKTextureAtlas class]);
+		dumpIvarNamesForClass([SKTransition class]);
+		dumpIvarNamesForClass([SKView class]);
+		
+		dumpIvarNamesForClass([SKPhysicsBody class]);
+		dumpIvarNamesForClass([SKPhysicsContact class]);
+		dumpIvarNamesForClass([SKPhysicsJoint class]);
+		dumpIvarNamesForClass([SKPhysicsJointFixed class]);
+		dumpIvarNamesForClass([SKPhysicsJointLimit class]);
+		dumpIvarNamesForClass([SKPhysicsJointPin class]);
+		dumpIvarNamesForClass([SKPhysicsJointSliding class]);
+		dumpIvarNamesForClass([SKPhysicsJointSpring class]);
+		dumpIvarNamesForClass([SKPhysicsWorld class]);
+
+		dumpIvarNamesForClass([SKNode class]);
+		dumpIvarNamesForClass([SKScene class]);
+		dumpIvarNamesForClass([SKCropNode class]);
+		dumpIvarNamesForClass([SKEffectNode class]);
+		dumpIvarNamesForClass([SKEmitterNode class]);
+		dumpIvarNamesForClass([SKLabelNode class]);
+		dumpIvarNamesForClass([SKShapeNode class]);
+		dumpIvarNamesForClass([SKSpriteNode class]);
+		dumpIvarNamesForClass([SKVideoNode class]);
+		
+		// private classes
+		dumpIvarNamesForClass(NSClassFromString(@"SKTextureCache"));
+		dumpIvarNamesForClass(NSClassFromString(@"SKBitmapFont"));
+
+	}
+	return self;
+}
+
+@end
+
 
 @implementation SKNode (QuickLook)
 
@@ -246,12 +304,45 @@ static NSString* NSShortStringFromCGPoint(CGPoint p)
 	}
 	[desc appendFormat:@"%@filteringMode:%@", delimiter, filteringMode];
 
-	[desc appendFormat:@"%@usesMipmaps:%@%@isData:%@%@isPath:%@%@isRotated:%@%@isCompressed:%@%@textureCache:%@",
+	[desc appendFormat:@"%@usesMipmaps:%@%@isData:%@%@isPath:%@%@isRotated:%@%@isCompressed:%@",
 	 delimiter, NSStringFromBool(self.usesMipmaps), delimiter, NSStringFromBool([[self valueForKey:@"isData"] boolValue]), delimiter, NSStringFromBool([[self valueForKey:@"isPath"] boolValue]),
-	 delimiter, NSStringFromBool([[self valueForKey:@"isRotated"] boolValue]), delimiter, NSStringFromBool([[self valueForKey:@"isCompressed"] boolValue]), delimiter, [self valueForKey:@"textureCache"]];
+	 delimiter, NSStringFromBool([[self valueForKey:@"isRotated"] boolValue]), delimiter, NSStringFromBool([[self valueForKey:@"isCompressed"] boolValue])];
+	[self descriptionForTextureCache:[self valueForKey:@"textureCache"] delimiter:delimiter desc:desc];
 	[desc appendFormat:@"%@originalAtlasName:%@%@originalTexture:%@", delimiter, [self valueForKey:@"originalAtlasName"], delimiter, [self valueForKey:@"originalTexture"]];
 	[desc appendFormat:@"%@subTextureName:%@", delimiter, [self valueForKey:@"subTextureName"]];
 
+	return desc;
+}
+
+-(void) descriptionForTextureCache:(id)texCache delimiter:(NSString*)delimiter desc:(NSMutableString*)desc
+{
+	[desc appendFormat:@"%@textureCache:[<%@: %p>", delimiter, NSStringFromClass([texCache class]), texCache];
+	[desc appendFormat:@"%@size:%@%@pixelSize:%@", delimiter, NSShortStringFromCGSize([[texCache valueForKey:@"size"] CGSizeValue]),
+	 delimiter, NSShortStringFromCGSize([[texCache valueForKey:@"pixelSize"] CGSizeValue])];
+	[desc appendFormat:@"%@isLoaded:%@%@hasAlpha:%@%@isPOT:%@", delimiter, NSStringFromBool([[texCache valueForKey:@"isLoaded"] boolValue]),
+	 delimiter, NSStringFromBool([[texCache valueForKey:@"hasAlpha"] boolValue]), delimiter, NSStringFromBool([[texCache valueForKey:@"isPOT"] boolValue])];
+	[desc appendString:@"]"];
+}
+
+-(NSString*) debugDescription
+{
+	return [self debugDescriptionWithDelimiter:@" "];
+}
+
+-(id) debugQuickLookObject
+{
+	return [self debugDescriptionWithDelimiter:@"\n"];
+}
+@end
+
+@implementation SKTextureAtlas (QuickLook)
+
+-(NSString*) debugDescriptionWithDelimiter:(NSString*)delimiter
+{
+	NSMutableString* desc = [NSMutableString string];
+	[desc appendFormat:@"<%@: %p>", NSStringFromClass([self class]), self];
+	[desc appendFormat:@"%@atlasName:'%@'", delimiter, [self valueForKey:@"atlasName"]];
+	[desc appendFormat:@"%@textureNames:%@", delimiter, self.textureNames];
 	return desc;
 }
 
