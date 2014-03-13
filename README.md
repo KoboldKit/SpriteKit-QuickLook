@@ -8,10 +8,22 @@ These categories add QuickLook (Xcode 5.1+) and debugDescription strings to Spri
 To use: 
 -------
 - add SpriteKit+QuickLook.h and .m to your project
-- while debugging, click on the QuickLook (eye) icon or the info (i) icon
+- while debugging, click on a variable's QuickLook (eye) icon or the info (i) icon (provided the variable is a reference of a Sprite Kit class)
+- or use debugDescription in logs: `NSLog(@"_background: %@", [_background debugDescription]);`
+
 
 Tip: these icons are below the variable inspector view and next to a Sprite Kit class reference tooltip after hovering on a reference with the mouse.
 Learn more about Xcode 5.1 QuickLook here: https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/CustomClassDisplay_in_QuickLook/CH01-quick_look_for_custom_objects/CH01-quick_look_for_custom_objects.html
+
+Supported Classes:
+--------
+
+The following classes have Quicklook support:
+
+- Node classes: SKNode, SKScene, SKSpriteNode, SKLabelNode
+- Other classes: SKTexture
+
+More will be added over time. Feel free to add yours and send a pull request.
 
 Example output:
 ------------
