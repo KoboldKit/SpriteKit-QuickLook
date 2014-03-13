@@ -19,6 +19,7 @@ Example output:
 Instead of just getting <SKSpriteNode: 0x111702210> with no info on property values, you can quicklook or log Sprite Kit classes with all their properties. 
 Here's an example output string:
 
+```
 Printing description of self->_background:
 <SKSpriteNode: 0x111702210>
 name:'(null)'
@@ -47,3 +48,4 @@ parent:<SBButtonNode: 0x111700c80>
 scene:<(null): 0x0>
 children:0
 userData:0
+```
