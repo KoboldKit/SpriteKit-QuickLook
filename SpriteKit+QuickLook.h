@@ -9,6 +9,7 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface SKNode (QuickLook)
+-(NSString*) debugDescriptionWithDelimiter:(NSString*)delimiter;
 @end
 
 @interface SKScene (QuickLook)
@@ -18,6 +19,11 @@
 @end
 
 @interface SKLabelNode (QuickLook)
+@end
+
+
+@interface SKTexture (QuickLook)
+-(NSString*) debugDescriptionWithDelimiter:(NSString*)delimiter;
 @end
 
 // more classes will be added over time ...

@@ -7,6 +7,7 @@
 //
 
 #import "SpriteKit+QuickLook.h"
+#import <objc/objc-runtime.h>
 
 static NSString* NSStringFromBool(BOOL b)
 {
@@ -28,22 +29,18 @@ static NSString* NSShortStringFromCGPoint(CGPoint p)
 	return [NSString stringWithFormat:@"{%.2f, %.2f}", p.x, p.y];
 }
 
-// change this to empty space if you don't like the line-breaks between properties
-static const NSString* delimiter = @"\n";
 
 @implementation SKNode (QuickLook)
 
--(NSString*) debugDescriptionForSubclass
+-(void) debugDescriptionForNodeSubclassWithDelimiter:(NSString*)delimiter desc:(NSMutableString*)desc
 {
-	return @"";
 }
 
--(NSString*) debugDescriptionForColorAndBlendMode
+-(void) debugDescriptionForColorAndBlendModeWithDelimiter:(NSString*)delimiter desc:(NSMutableString*)desc
 {
-	NSMutableString* desc = [NSMutableString string];
 	if ([self respondsToSelector:@selector(color)] && [self respondsToSelector:@selector(colorBlendFactor)] && [self respondsToSelector:@selector(blendMode)])
 	{
-		[desc appendFormat:@"color:%@%@colorBlendFactor:%.2f", [(SKSpriteNode*)self color], delimiter, [(id)self colorBlendFactor]];
+		[desc appendFormat:@"%@color:%@%@colorBlendFactor:%.2f", delimiter, [(SKSpriteNode*)self color], delimiter, [(id)self colorBlendFactor]];
 		
 		NSString* blendMode = nil;
 		switch ([(id)self blendMode]) {
@@ -75,26 +72,30 @@ static const NSString* delimiter = @"\n";
 		}
 		[desc appendFormat:@"%@blendMode:%@", delimiter, blendMode];
 	}
-	return desc;
 }
 
--(NSString*) debugDescriptionForSizeAndAnchorPoint
+-(void) debugDescriptionForSizeAndAnchorPointWithDelimiter:(NSString*)delimiter desc:(NSMutableString*)desc
 {
-	NSMutableString* desc = [NSMutableString string];
 	if ([self respondsToSelector:@selector(size)] && [self respondsToSelector:@selector(anchorPoint)])
 	{
-		[desc appendFormat:@"size:%@%@anchorPoint:%@", NSShortStringFromCGSize([(id)self size]), delimiter, NSShortStringFromCGPoint([(id)self anchorPoint])];
+		[desc appendFormat:@"%@size:%@%@anchorPoint:%@", delimiter, NSShortStringFromCGSize([(id)self size]), delimiter, NSShortStringFromCGPoint([(id)self anchorPoint])];
 	}
-	return desc;
 }
 
--(NSString*) debugDescription
+-(NSString*) debugDescriptionWithDelimiter:(NSString*)delimiter
 {
 	NSMutableString* desc = [NSMutableString string];
 	[desc appendFormat:@"<%@: %p>%@name:'%@'%@position:%@%@rotation:%.2f%@scale:{%.2f, %.2f}",
 	 NSStringFromClass([self class]), self, delimiter, self.name, delimiter, NSShortStringFromCGPoint(self.position), delimiter, self.zRotation, delimiter, self.xScale, self.yScale];
-	[desc appendFormat:@"%@===>%@%@%@<===", delimiter, delimiter, self.debugDescriptionForSubclass, delimiter];
-	[desc appendFormat:@"%@z:%.2f%@frame:%@%@accumulatedFrame:%@", delimiter, self.zPosition, delimiter, NSShortStringFromCGRect(self.frame), delimiter, NSShortStringFromCGRect([self calculateAccumulatedFrame])];
+	
+	if ([self isMemberOfClass:[SKNode class]] == NO)
+	{
+		[desc appendFormat:@"%@=== SKNode subclass properties ===>%@", delimiter, delimiter];
+		[self debugDescriptionForNodeSubclassWithDelimiter:delimiter desc:desc];
+		[desc appendFormat:@"%@<===", delimiter];
+	}
+	
+	[desc appendFormat:@"%@frame:%@%@accumulatedFrame:%@%@zPos:%.2f", delimiter, NSShortStringFromCGRect(self.frame), delimiter, NSShortStringFromCGRect([self calculateAccumulatedFrame]), delimiter, self.zPosition];
 	[desc appendFormat:@"%@speed:%.2f%@alpha:%.2f%@hidden:%@%@userInteractionEnabled:%@%@paused:%@",
 	 delimiter, self.speed, delimiter, self.alpha, delimiter, NSStringFromBool(self.hidden), delimiter, NSStringFromBool(self.userInteractionEnabled), delimiter, NSStringFromBool(self.paused)];
 	[desc appendFormat:@"%@hasActions:%@%@parent:<%@: %p>%@scene:<%@: %p>",
@@ -119,20 +120,25 @@ static const NSString* delimiter = @"\n";
 	{
 		[desc appendFormat:@"%@userData:0", delimiter];
 	}
+	
 	return desc;
+}
+
+-(NSString*) debugDescription
+{
+	return [self debugDescriptionWithDelimiter:@" "];
 }
 
 -(id) debugQuickLookObject
 {
-	return self.debugDescription;
+	return [self debugDescriptionWithDelimiter:@"\n"];
 }
 
 @end
 
 @implementation SKScene (QuickLook)
--(NSString*) debugDescriptionForSubclass
+-(void) debugDescriptionForNodeSubclassWithDelimiter:(NSString*)delimiter desc:(NSMutableString*)desc
 {
-	NSMutableString* desc = [NSMutableString string];
 	NSString* scaleMode = nil;
 	switch (self.scaleMode) {
 		case SKSceneScaleModeAspectFill:
@@ -153,27 +159,24 @@ static const NSString* delimiter = @"\n";
 			break;
 	}
 	[desc appendFormat:@"scaleMode:%@%@backgroundColor:%@", scaleMode, delimiter, self.backgroundColor];
-	[desc appendFormat:@"%@%@", delimiter, [self debugDescriptionForSizeAndAnchorPoint]];
+	[self debugDescriptionForSizeAndAnchorPointWithDelimiter:delimiter desc:desc];
 	[desc appendFormat:@"%@view:<%@: %p>%@physicsWorld:%@", delimiter, NSStringFromClass([self.view class]), self.view, delimiter, [self.physicsWorld debugDescription]];
-	return desc;
 }
 @end
 
 @implementation SKSpriteNode (QuickLook)
--(NSString*) debugDescriptionForSubclass
+-(void) debugDescriptionForNodeSubclassWithDelimiter:(NSString*)delimiter desc:(NSMutableString*)desc
 {
-	NSMutableString* desc = [NSMutableString string];
-	[desc appendFormat:@"texture:%@%@centerRect:%@", self.texture.debugDescription, delimiter, NSShortStringFromCGRect(self.centerRect)];
-	[desc appendFormat:@"%@%@", delimiter, [self debugDescriptionForSizeAndAnchorPoint]];
-	[desc appendFormat:@"%@%@", delimiter, [self debugDescriptionForColorAndBlendMode]];
-	return desc;
+	[desc appendFormat:@"texture:[%@]", self.texture.description];
+	[self debugDescriptionForSizeAndAnchorPointWithDelimiter:delimiter desc:desc];
+	[desc appendFormat:@"%@centerRect:%@", delimiter, NSShortStringFromCGRect(self.centerRect)];
+	[self debugDescriptionForColorAndBlendModeWithDelimiter:delimiter desc:desc];
 }
 @end
 
 @implementation SKLabelNode (QuickLook)
--(NSString*) debugDescriptionForSubclass
+-(void) debugDescriptionForNodeSubclassWithDelimiter:(NSString*)delimiter desc:(NSMutableString*)desc
 {
-	NSMutableString* desc = [NSMutableString string];
 	[desc appendFormat:@"text:'%@'", self.text];
 	[desc appendFormat:@"%@fontName:'%@'%@fontSize:%.1f%@fontColor:%@", delimiter, self.fontName, delimiter, self.fontSize, delimiter, self.fontColor];
 
@@ -215,7 +218,50 @@ static const NSString* delimiter = @"\n";
 	}
 	
 	[desc appendFormat:@"%@vAlign:%@%@hAlign:%@", delimiter, vAlign, delimiter, hAlign];
-	[desc appendString:[self debugDescriptionForColorAndBlendMode]];
+	[self debugDescriptionForColorAndBlendModeWithDelimiter:delimiter desc:desc];
+}
+@end
+
+
+@implementation SKTexture (QuickLook)
+-(NSString*) debugDescriptionWithDelimiter:(NSString*)delimiter
+{
+	NSMutableString* desc = [NSMutableString string];
+	[desc appendFormat:@"<%@: %p>", NSStringFromClass([self class]), self];
+	[desc appendFormat:@"%@imageName:'%@'", delimiter, [[self valueForKey:@"imgName"] lastPathComponent]];
+	[desc appendFormat:@"%@size:%@%@textureRect:%@", delimiter, NSShortStringFromCGSize(self.size), delimiter, NSShortStringFromCGRect(self.textureRect)];
+	
+	NSString* filteringMode = nil;
+	switch (self.filteringMode) {
+		case SKTextureFilteringLinear:
+			filteringMode = @"Linear";
+			break;
+		case SKTextureFilteringNearest:
+			filteringMode = @"Nearest";
+			break;
+			
+		default:
+			filteringMode = @"(unknown)";
+			break;
+	}
+	[desc appendFormat:@"%@filteringMode:%@", delimiter, filteringMode];
+
+	[desc appendFormat:@"%@usesMipmaps:%@%@isData:%@%@isPath:%@%@isRotated:%@%@isCompressed:%@%@textureCache:%@",
+	 delimiter, NSStringFromBool(self.usesMipmaps), delimiter, NSStringFromBool([[self valueForKey:@"isData"] boolValue]), delimiter, NSStringFromBool([[self valueForKey:@"isPath"] boolValue]),
+	 delimiter, NSStringFromBool([[self valueForKey:@"isRotated"] boolValue]), delimiter, NSStringFromBool([[self valueForKey:@"isCompressed"] boolValue]), delimiter, [self valueForKey:@"textureCache"]];
+	[desc appendFormat:@"%@originalAtlasName:%@%@originalTexture:%@", delimiter, [self valueForKey:@"originalAtlasName"], delimiter, [self valueForKey:@"originalTexture"]];
+	[desc appendFormat:@"%@subTextureName:%@", delimiter, [self valueForKey:@"subTextureName"]];
+
 	return desc;
+}
+
+-(NSString*) debugDescription
+{
+	return [self debugDescriptionWithDelimiter:@" "];
+}
+
+-(id) debugQuickLookObject
+{
+	return [self debugDescriptionWithDelimiter:@"\n"];
 }
 @end
