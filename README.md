@@ -21,7 +21,8 @@ Supported Classes:
 The following classes have Quicklook support:
 
 - Node classes: SKNode, SKScene, SKSpriteNode, SKLabelNode
-- Other classes: SKTexture
+- Other classes: SKTexture, SKTextureAtlas
+- Private classes: SKTextureCache
 
 More will be added over time. Feel free to add yours and send a pull request.
 
