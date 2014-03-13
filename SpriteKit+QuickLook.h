@@ -8,21 +8,24 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+@interface QuickLookHelper : NSObject
+@end
+
 @interface SKNode (QuickLook)
 -(NSString*) debugDescriptionWithDelimiter:(NSString*)delimiter;
 @end
-
 @interface SKScene (QuickLook)
 @end
-
 @interface SKSpriteNode (QuickLook)
 @end
-
 @interface SKLabelNode (QuickLook)
 @end
 
 
 @interface SKTexture (QuickLook)
+-(NSString*) debugDescriptionWithDelimiter:(NSString*)delimiter;
+@end
+@interface SKTextureAtlas (QuickLook)
 -(NSString*) debugDescriptionWithDelimiter:(NSString*)delimiter;
 @end
 
