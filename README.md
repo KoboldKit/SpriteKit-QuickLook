@@ -49,3 +49,5 @@ scene:<(null): 0x0>
 children:0
 userData:0
 ```
+
+Tip: to change from "each property on a new line" to denser space-delimited output change the static `delimiter` variable to `@" "` if you prefer output to be on a single line.
