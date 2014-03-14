@@ -136,7 +136,7 @@ static void dumpIvarNamesForClass(Class klass)
 {
 	if ([self respondsToSelector:@selector(size)] && [self respondsToSelector:@selector(anchorPoint)])
 	{
-		[desc appendFormat:@"%@size:%@%@anchorPoint:%@", delimiter, NSShortStringFromCGSize([(id)self size]), delimiter, NSShortStringFromCGPoint([(id)self anchorPoint])];
+		[desc appendFormat:@"%@size:%@%@anchorPoint:%@", delimiter, NSShortStringFromCGSize([(SKSpriteNode*)self size]), delimiter, NSShortStringFromCGPoint([(SKSpriteNode*)self anchorPoint])];
 	}
 }
 
@@ -148,9 +148,9 @@ static void dumpIvarNamesForClass(Class klass)
 	
 	if ([self isMemberOfClass:[SKNode class]] == NO)
 	{
-		[desc appendFormat:@"%@=== SKNode subclass properties ===>%@", delimiter, delimiter];
+		[desc appendFormat:@"%@==>%@", delimiter, delimiter];
 		[self debugDescriptionForNodeSubclassWithDelimiter:delimiter desc:desc];
-		[desc appendFormat:@"%@<===", delimiter];
+		[desc appendFormat:@"%@<==", delimiter];
 	}
 	
 	[desc appendFormat:@"%@frame:%@%@accumulatedFrame:%@%@zPos:%.2f", delimiter, NSShortStringFromCGRect(self.frame), delimiter, NSShortStringFromCGRect([self calculateAccumulatedFrame]), delimiter, self.zPosition];
@@ -168,7 +168,7 @@ static void dumpIvarNamesForClass(Class klass)
 	}
 	if (self.physicsBody)
 	{
-		[desc appendFormat:@"%@physicsBody:%@", delimiter, [self.physicsBody debugDescription]];
+		[desc appendFormat:@"%@physicsBody:%@", delimiter, self.physicsBody.description];
 	}
 	if (self.userData.count)
 	{
@@ -182,16 +182,10 @@ static void dumpIvarNamesForClass(Class klass)
 	return desc;
 }
 
--(NSString*) debugDescription
-{
-	return [self debugDescriptionWithDelimiter:@" "];
-}
-
 -(id) debugQuickLookObject
 {
 	return [self debugDescriptionWithDelimiter:@"\n"];
 }
-
 @end
 
 @implementation SKScene (QuickLook)
@@ -324,11 +318,6 @@ static void dumpIvarNamesForClass(Class klass)
 	[desc appendString:@"]"];
 }
 
--(NSString*) debugDescription
-{
-	return [self debugDescriptionWithDelimiter:@" "];
-}
-
 -(id) debugQuickLookObject
 {
 	return [self debugDescriptionWithDelimiter:@"\n"];
@@ -344,11 +333,6 @@ static void dumpIvarNamesForClass(Class klass)
 	[desc appendFormat:@"%@atlasName:'%@'", delimiter, [self valueForKey:@"atlasName"]];
 	[desc appendFormat:@"%@textureNames:%@", delimiter, self.textureNames];
 	return desc;
-}
-
--(NSString*) debugDescription
-{
-	return [self debugDescriptionWithDelimiter:@" "];
 }
 
 -(id) debugQuickLookObject
