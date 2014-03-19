@@ -18,7 +18,7 @@ https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/CustomClas
 Example output:
 ------------
 
-Instead of just getting <SKSpriteNode: 0x111702210> with no info on property values, you can quicklook or log Sprite Kit classes with all their properties. 
+Instead of just getting <SKSpriteNode: 0x111702210> with no info on property values, you can quicklook or log Sprite Kit classes with all their properties. You can issue a quicklook anytime anywhere from within the debugger, so you don't need to NSLog anything in order to get this info. It's right there where and when you need it the most!
 
 Here are some example output strings. Note how even private ivars and their values are being dumped, and the variables are sorted by name.
 
@@ -83,7 +83,8 @@ SKLabelNode:
   _textRect = NSRect: {{0, 0}, {0, 0}}
   _textSprite = <null>
   _textSprites = ()
-  
+```
+
 SKView Example
 -----------
 ```
