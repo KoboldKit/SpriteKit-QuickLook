@@ -9,26 +9,6 @@
 #import "SpriteKit+QuickLook.h"
 #import <objc/runtime.h>
 
-static NSString* NSStringFromBool(BOOL b)
-{
-	return b ? @"YES" : @"NO";
-}
-
-static NSString* NSShortStringFromCGRect(CGRect r)
-{
-	return [NSString stringWithFormat:@"{{%.2f, %.2f}, {%.2f, %.2f}}", r.origin.x, r.origin.y, r.size.width, r.size.height];
-}
-
-static NSString* NSShortStringFromCGSize(CGSize s)
-{
-	return [NSString stringWithFormat:@"{%.2f, %.2f}", s.width, s.height];
-}
-
-static NSString* NSShortStringFromCGPoint(CGPoint p)
-{
-	return [NSString stringWithFormat:@"{%.2f, %.2f}", p.x, p.y];
-}
-
 static void dumpIvarNamesForClass(Class klass)
 {
 	NSMutableString* names = [NSMutableString stringWithFormat:@"%@ ivars:\n", NSStringFromClass(klass)];
@@ -43,6 +23,73 @@ static void dumpIvarNamesForClass(Class klass)
 	NSLog(@"%@\n", names);
 }
 
+@interface QuickLookHelper ()
++(NSString*) debugDescriptionStringWithDelimiter:(NSString*)delimiter spriteKitObject:(id)object;
+@end
+
+
+@implementation SKNode (QuickLook)
+-(id) debugQuickLookObject
+{
+	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
+}
+@end
+@implementation SKTexture (QuickLook)
+-(id) debugQuickLookObject
+{
+	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
+}
+@end
+@implementation SKTextureAtlas (QuickLook)
+-(id) debugQuickLookObject
+{
+	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
+}
+@end
+@implementation SKAction (QuickLook)
+-(id) debugQuickLookObject
+{
+	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
+}
+@end
+@implementation SKView (QuickLook)
+-(id) debugQuickLookObject
+{
+	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
+}
+@end
+@implementation SKPhysicsBody (QuickLook)
+-(id) debugQuickLookObject
+{
+	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
+}
+@end
+@implementation SKPhysicsWorld (QuickLook)
+-(id) debugQuickLookObject
+{
+	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
+}
+@end
+@implementation SKPhysicsJoint (QuickLook)
+-(id) debugQuickLookObject
+{
+	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
+}
+@end
+@implementation SKTransition (QuickLook)
+-(id) debugQuickLookObject
+{
+	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
+}
+@end
+@implementation SKKeyframeSequence (QuickLook)
+-(id) debugQuickLookObject
+{
+	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
+}
+@end
+
+
 @implementation QuickLookHelper
 
 -(id) init
@@ -50,293 +97,259 @@ static void dumpIvarNamesForClass(Class klass)
 	self = [super init];
 	if (self)
 	{
-		dumpIvarNamesForClass([SKAction class]);
-		dumpIvarNamesForClass([SKKeyframeSequence class]);
-		dumpIvarNamesForClass([SKTexture class]);
-		dumpIvarNamesForClass([SKTextureAtlas class]);
-		dumpIvarNamesForClass([SKTransition class]);
-		dumpIvarNamesForClass([SKView class]);
+		/*
+		 dumpIvarNamesForClass([SKAction class]);
+		 dumpIvarNamesForClass([SKKeyframeSequence class]);
+		 dumpIvarNamesForClass([SKTexture class]);
+		 dumpIvarNamesForClass([SKTextureAtlas class]);
+		 dumpIvarNamesForClass([SKTransition class]);
+		 dumpIvarNamesForClass([SKView class]);
+		 
+		 dumpIvarNamesForClass([SKPhysicsBody class]);
+		 dumpIvarNamesForClass([SKPhysicsContact class]);
+		 dumpIvarNamesForClass([SKPhysicsJoint class]);
+		 dumpIvarNamesForClass([SKPhysicsJointFixed class]);
+		 dumpIvarNamesForClass([SKPhysicsJointLimit class]);
+		 dumpIvarNamesForClass([SKPhysicsJointPin class]);
+		 dumpIvarNamesForClass([SKPhysicsJointSliding class]);
+		 dumpIvarNamesForClass([SKPhysicsJointSpring class]);
+		 dumpIvarNamesForClass([SKPhysicsWorld class]);
+		 
+		 dumpIvarNamesForClass([SKNode class]);
+		 dumpIvarNamesForClass([SKScene class]);
+		 dumpIvarNamesForClass([SKCropNode class]);
+		 dumpIvarNamesForClass([SKEffectNode class]);
+		 dumpIvarNamesForClass([SKEmitterNode class]);
+		 dumpIvarNamesForClass([SKLabelNode class]);
+		 dumpIvarNamesForClass([SKShapeNode class]);
+		 dumpIvarNamesForClass([SKSpriteNode class]);
+		 dumpIvarNamesForClass([SKVideoNode class]);
+		 
+		 // private classes
+		 dumpIvarNamesForClass(NSClassFromString(@"SKTextureCache"));
+		 dumpIvarNamesForClass(NSClassFromString(@"SKBitmapFont"));
+		 */
 		
-		dumpIvarNamesForClass([SKPhysicsBody class]);
-		dumpIvarNamesForClass([SKPhysicsContact class]);
-		dumpIvarNamesForClass([SKPhysicsJoint class]);
-		dumpIvarNamesForClass([SKPhysicsJointFixed class]);
-		dumpIvarNamesForClass([SKPhysicsJointLimit class]);
-		dumpIvarNamesForClass([SKPhysicsJointPin class]);
-		dumpIvarNamesForClass([SKPhysicsJointSliding class]);
-		dumpIvarNamesForClass([SKPhysicsJointSpring class]);
-		dumpIvarNamesForClass([SKPhysicsWorld class]);
-
-		dumpIvarNamesForClass([SKNode class]);
-		dumpIvarNamesForClass([SKScene class]);
-		dumpIvarNamesForClass([SKCropNode class]);
-		dumpIvarNamesForClass([SKEffectNode class]);
-		dumpIvarNamesForClass([SKEmitterNode class]);
 		dumpIvarNamesForClass([SKLabelNode class]);
-		dumpIvarNamesForClass([SKShapeNode class]);
-		dumpIvarNamesForClass([SKSpriteNode class]);
-		dumpIvarNamesForClass([SKVideoNode class]);
 		
-		// private classes
-		dumpIvarNamesForClass(NSClassFromString(@"SKTextureCache"));
-		dumpIvarNamesForClass(NSClassFromString(@"SKBitmapFont"));
-
+		SKNode* node = [SKLabelNode node];
+		NSLog(@"%@", [node debugQuickLookObject]);
 	}
 	return self;
 }
 
-@end
-
-
-@implementation SKNode (QuickLook)
-
--(void) debugDescriptionForNodeSubclassWithDelimiter:(NSString*)delimiter desc:(NSMutableString*)desc
++(BOOL) isSpriteKitClass:(Class)klass
 {
+	return ([klass isSubclassOfClass:[SKNode class]] ||
+			[klass isSubclassOfClass:[SKTexture class]] ||
+			[klass isSubclassOfClass:[SKTextureAtlas class]] ||
+			[klass isSubclassOfClass:[SKAction class]] ||
+			[klass isSubclassOfClass:[SKView class]] ||
+			[klass isSubclassOfClass:[SKPhysicsBody class]] ||
+			[klass isSubclassOfClass:[SKPhysicsWorld class]] ||
+			[klass isSubclassOfClass:[SKPhysicsJoint class]] ||
+			[klass isSubclassOfClass:[SKTransition class]] ||
+			[klass isSubclassOfClass:[SKKeyframeSequence class]]);
 }
 
--(void) debugDescriptionForColorAndBlendModeWithDelimiter:(NSString*)delimiter desc:(NSMutableString*)desc
++(NSDictionary*) debugClassVarDictionaryForSpriteKitObject:(id)object
 {
-	if ([self respondsToSelector:@selector(color)] && [self respondsToSelector:@selector(colorBlendFactor)] && [self respondsToSelector:@selector(blendMode)])
+	NSMutableDictionary* classesDict = [NSMutableDictionary dictionary];
+	NSMutableArray* classOrder = [NSMutableArray array];
+	[classesDict setObject:classOrder forKey:@"classes"];
+	
+	Class klass = [object class];
+	while ([QuickLookHelper isSpriteKitClass:klass])
 	{
-		[desc appendFormat:@"%@color:%@%@colorBlendFactor:%.2f", delimiter, [(SKSpriteNode*)self color], delimiter, [(id)self colorBlendFactor]];
+		NSMutableDictionary* ivarsDict = [NSMutableDictionary dictionary];
 		
-		NSString* blendMode = nil;
-		switch ([(id)self blendMode]) {
+		unsigned int count = 0;
+		objc_property_t* properties = class_copyPropertyList(klass, &count);
+		for (unsigned int i = 0; i < count; i++)
+		{
+			objc_property_t prop = properties[i];
+			NSString* propName = [NSString stringWithCString:property_getName(prop) encoding:NSUTF8StringEncoding];
+			id value = [object valueForKey:propName];
+			[ivarsDict setObject:value ? value : [NSNull null] forKey:propName];
+		}
+		
+		count = 0;
+		Ivar* ivars = class_copyIvarList(klass, &count);
+		for (unsigned int i = 0; i < count; i++)
+		{
+			Ivar var = ivars[i];
+			NSString* ivarName = [NSString stringWithCString:ivar_getName(var) encoding:NSUTF8StringEncoding];
+			
+			// only add ivars if there's no corresponding property of the same name
+			NSString* ivarNameWithoutUnderscore = [ivarName substringFromIndex:1];
+			if ([ivarsDict objectForKey:ivarNameWithoutUnderscore] == NO)
+			{
+				id value = [object valueForKey:ivarName];
+				[ivarsDict setObject:value ? value : [NSNull null] forKey:ivarName];
+			}
+		}
+		
+		NSString* className = NSStringFromClass(klass);
+		[classesDict setObject:ivarsDict forKey:className];
+		[classOrder insertObject:className atIndex:0];
+		
+		klass = [klass superclass];
+	}
+	
+	return classesDict;
+}
+
++(NSString*) formattedStringForValue:(id)value varName:(NSString*)varName
+{
+	NSString* valueString = nil;
+	if ([varName isEqualToString:@"blendMode"])
+	{
+		switch ([value integerValue]) {
 			case SKBlendModeAdd:
-				blendMode = @"Add";
+				valueString = @"Add";
 				break;
 			case SKBlendModeAlpha:
-				blendMode = @"Alpha";
+				valueString = @"Alpha";
 				break;
 			case SKBlendModeMultiply:
-				blendMode = @"Multiply";
+				valueString = @"Multiply";
 				break;
 			case SKBlendModeMultiplyX2:
-				blendMode = @"MultiplyX2";
+				valueString = @"MultiplyX2";
 				break;
 			case SKBlendModeReplace:
-				blendMode = @"Replace";
+				valueString = @"Replace";
 				break;
 			case SKBlendModeScreen:
-				blendMode = @"Screen";
+				valueString = @"Screen";
 				break;
 			case SKBlendModeSubtract:
-				blendMode = @"Subtract";
+				valueString = @"Subtract";
 				break;
-				
 			default:
-				blendMode = @"(unknown)";
+				valueString = [NSString stringWithFormat:@"%d (unknown)", [value integerValue]];
 				break;
 		}
-		[desc appendFormat:@"%@blendMode:%@", delimiter, blendMode];
 	}
-}
-
--(void) debugDescriptionForSizeAndAnchorPointWithDelimiter:(NSString*)delimiter desc:(NSMutableString*)desc
-{
-	if ([self respondsToSelector:@selector(size)] && [self respondsToSelector:@selector(anchorPoint)])
+	else if ([varName isEqualToString:@"scaleMode"])
 	{
-		[desc appendFormat:@"%@size:%@%@anchorPoint:%@", delimiter, NSShortStringFromCGSize([(SKSpriteNode*)self size]), delimiter, NSShortStringFromCGPoint([(SKSpriteNode*)self anchorPoint])];
+		switch ([value integerValue]) {
+			case SKSceneScaleModeAspectFill:
+				valueString = @"AspectFill";
+				break;
+			case SKSceneScaleModeAspectFit:
+				valueString = @"AspectFit";
+				break;
+			case SKSceneScaleModeFill:
+				valueString = @"Fill";
+				break;
+			case SKSceneScaleModeResizeFill:
+				valueString = @"ResizeFill";
+				break;
+			default:
+				valueString = [NSString stringWithFormat:@"%d (unknown)", [value integerValue]];
+				break;
+		}
 	}
-}
-
--(NSString*) debugDescriptionWithDelimiter:(NSString*)delimiter
-{
-	NSMutableString* desc = [NSMutableString string];
-	[desc appendFormat:@"<%@: %p>%@name:'%@'%@position:%@%@rotation:%.2f%@scale:{%.2f, %.2f}",
-	 NSStringFromClass([self class]), self, delimiter, self.name, delimiter, NSShortStringFromCGPoint(self.position), delimiter, self.zRotation, delimiter, self.xScale, self.yScale];
-	
-	if ([self isMemberOfClass:[SKNode class]] == NO)
+	else if ([varName isEqualToString:@"verticalAlignmentMode"])
 	{
-		[desc appendFormat:@"%@==>%@", delimiter, delimiter];
-		[self debugDescriptionForNodeSubclassWithDelimiter:delimiter desc:desc];
-		[desc appendFormat:@"%@<==", delimiter];
+		switch ([value integerValue]) {
+			case SKLabelVerticalAlignmentModeBaseline:
+				valueString = @"Baseline";
+				break;
+			case SKLabelVerticalAlignmentModeBottom:
+				valueString = @"Bottom";
+				break;
+			case SKLabelVerticalAlignmentModeCenter:
+				valueString = @"Center";
+				break;
+			case SKLabelVerticalAlignmentModeTop:
+				valueString = @"Top";
+				break;
+			default:
+				valueString = [NSString stringWithFormat:@"%d (unknown)", [value integerValue]];
+				break;
+		}
 	}
-	
-	[desc appendFormat:@"%@frame:%@%@accumulatedFrame:%@%@zPos:%.2f", delimiter, NSShortStringFromCGRect(self.frame), delimiter, NSShortStringFromCGRect([self calculateAccumulatedFrame]), delimiter, self.zPosition];
-	[desc appendFormat:@"%@speed:%.2f%@alpha:%.2f%@hidden:%@%@userInteractionEnabled:%@%@paused:%@",
-	 delimiter, self.speed, delimiter, self.alpha, delimiter, NSStringFromBool(self.hidden), delimiter, NSStringFromBool(self.userInteractionEnabled), delimiter, NSStringFromBool(self.paused)];
-	[desc appendFormat:@"%@hasActions:%@%@parent:<%@: %p>%@scene:<%@: %p>",
-	 delimiter, NSStringFromBool(self.hasActions), delimiter, NSStringFromClass([self.parent class]), self.parent, delimiter, NSStringFromClass([self.scene class]), self.scene];
-	if (self.children.count)
+	else if ([varName isEqualToString:@"horizontalAlignmentMode"])
 	{
-		[desc appendFormat:@"%@children:%@", delimiter, self.children];
+		switch ([value integerValue]) {
+			case SKLabelHorizontalAlignmentModeCenter:
+				valueString = @"Center";
+				break;
+			case SKLabelHorizontalAlignmentModeLeft:
+				valueString = @"Left";
+				break;
+			case SKLabelHorizontalAlignmentModeRight:
+				valueString = @"Right";
+				break;
+			default:
+				valueString = [NSString stringWithFormat:@"%d (unknown)", [value integerValue]];
+				break;
+		}
+	}
+	else if ([varName isEqualToString:@"filteringMode"])
+	{
+		switch ([value integerValue]) {
+			case SKTextureFilteringLinear:
+				valueString = @"Linear";
+				break;
+			case SKTextureFilteringNearest:
+				valueString = @"Nearest";
+				break;
+			default:
+				valueString = [NSString stringWithFormat:@"%d (unknown)", [value integerValue]];
+				break;
+		}
+	}
+	else if ([value isKindOfClass:[NSString class]])
+	{
+		valueString = [NSString stringWithFormat:@"'%@'", value];
 	}
 	else
 	{
-		[desc appendFormat:@"%@children:0", delimiter];
+		valueString = [[value description] stringByReplacingOccurrencesOfString:@"\n" withString:@""];
 	}
-	if (self.physicsBody)
-	{
-		[desc appendFormat:@"%@physicsBody:%@", delimiter, self.physicsBody.description];
-	}
-	if (self.userData.count)
-	{
-		[desc appendFormat:@"%@userData:%@", delimiter, self.userData];
-	}
-	else
-	{
-		[desc appendFormat:@"%@userData:0", delimiter];
-	}
-	
-	return desc;
+
+	return valueString;
 }
 
--(id) debugQuickLookObject
-{
-	return [self debugDescriptionWithDelimiter:@"\n"];
-}
-@end
-
-@implementation SKScene (QuickLook)
--(void) debugDescriptionForNodeSubclassWithDelimiter:(NSString*)delimiter desc:(NSMutableString*)desc
-{
-	NSString* scaleMode = nil;
-	switch (self.scaleMode) {
-		case SKSceneScaleModeAspectFill:
-			scaleMode = @"AspectFill";
-			break;
-		case SKSceneScaleModeAspectFit:
-			scaleMode = @"AspectFit";
-			break;
-		case SKSceneScaleModeFill:
-			scaleMode = @"Fill";
-			break;
-		case SKSceneScaleModeResizeFill:
-			scaleMode = @"ResizeFill";
-			break;
-			
-		default:
-			scaleMode = @"(unknown)";
-			break;
-	}
-	[desc appendFormat:@"scaleMode:%@%@backgroundColor:%@", scaleMode, delimiter, self.backgroundColor];
-	[self debugDescriptionForSizeAndAnchorPointWithDelimiter:delimiter desc:desc];
-	[desc appendFormat:@"%@view:<%@: %p>%@physicsWorld:%@", delimiter, NSStringFromClass([self.view class]), self.view, delimiter, [self.physicsWorld debugDescription]];
-}
-@end
-
-@implementation SKSpriteNode (QuickLook)
--(void) debugDescriptionForNodeSubclassWithDelimiter:(NSString*)delimiter desc:(NSMutableString*)desc
-{
-	[desc appendFormat:@"texture:[%@]", self.texture.description];
-	[self debugDescriptionForSizeAndAnchorPointWithDelimiter:delimiter desc:desc];
-	[desc appendFormat:@"%@centerRect:%@", delimiter, NSShortStringFromCGRect(self.centerRect)];
-	[self debugDescriptionForColorAndBlendModeWithDelimiter:delimiter desc:desc];
-}
-@end
-
-@implementation SKLabelNode (QuickLook)
--(void) debugDescriptionForNodeSubclassWithDelimiter:(NSString*)delimiter desc:(NSMutableString*)desc
-{
-	[desc appendFormat:@"text:'%@'", self.text];
-	[desc appendFormat:@"%@fontName:'%@'%@fontSize:%.1f%@fontColor:%@", delimiter, self.fontName, delimiter, self.fontSize, delimiter, self.fontColor];
-
-	NSString* vAlign = nil;
-	switch (self.verticalAlignmentMode) {
-		case SKLabelVerticalAlignmentModeBaseline:
-			vAlign = @"Baseline";
-			break;
-		case SKLabelVerticalAlignmentModeBottom:
-			vAlign = @"Bottom";
-			break;
-		case SKLabelVerticalAlignmentModeCenter:
-			vAlign = @"Center";
-			break;
-		case SKLabelVerticalAlignmentModeTop:
-			vAlign = @"Top";
-			break;
-			
-		default:
-			vAlign = @"(unknown)";
-			break;
-	}
-	
-	NSString* hAlign = nil;
-	switch (self.horizontalAlignmentMode) {
-		case SKLabelHorizontalAlignmentModeCenter:
-			hAlign = @"Center";
-			break;
-		case SKLabelHorizontalAlignmentModeLeft:
-			hAlign = @"Left";
-			break;
-		case SKLabelHorizontalAlignmentModeRight:
-			hAlign = @"Right";
-			break;
-			
-		default:
-			hAlign = @"(unknown)";
-			break;
-	}
-	
-	[desc appendFormat:@"%@vAlign:%@%@hAlign:%@", delimiter, vAlign, delimiter, hAlign];
-	[self debugDescriptionForColorAndBlendModeWithDelimiter:delimiter desc:desc];
-}
-@end
-
-
-@implementation SKTexture (QuickLook)
--(NSString*) debugDescriptionWithDelimiter:(NSString*)delimiter
++(NSString*) debugDescriptionStringWithDelimiter:(NSString*)delimiter spriteKitObject:(id)object
 {
 	NSMutableString* desc = [NSMutableString string];
-	[desc appendFormat:@"<%@: %p>", NSStringFromClass([self class]), self];
-	[desc appendFormat:@"%@imageName:'%@'", delimiter, [[self valueForKey:@"imgName"] lastPathComponent]];
-	[desc appendFormat:@"%@size:%@%@textureRect:%@", delimiter, NSShortStringFromCGSize(self.size), delimiter, NSShortStringFromCGRect(self.textureRect)];
+	[desc appendFormat:@"%@%@", [object debugDescription], delimiter];
 	
-	NSString* filteringMode = nil;
-	switch (self.filteringMode) {
-		case SKTextureFilteringLinear:
-			filteringMode = @"Linear";
-			break;
-		case SKTextureFilteringNearest:
-			filteringMode = @"Nearest";
-			break;
-			
-		default:
-			filteringMode = @"(unknown)";
-			break;
+	NSDictionary* classVars = [QuickLookHelper debugClassVarDictionaryForSpriteKitObject:object];
+	
+	for (NSString* className in classVars[@"classes"])
+	{
+		[desc appendFormat:@"%@:%@", className, delimiter];
+		
+		NSDictionary* ivars = classVars[className];
+		NSArray* keys = [ivars allKeys];
+		keys = [keys sortedArrayUsingComparator:^(id obj1, id obj2)
+				{
+					if ([(NSString*)obj1 hasPrefix:@"_"] && [(NSString*)obj2 hasPrefix:@"_"] == NO)
+					{
+						return NSOrderedDescending;
+					}
+					else if ([(NSString*)obj1 hasPrefix:@"_"] == NO && [(NSString*)obj2 hasPrefix:@"_"])
+					{
+						return NSOrderedAscending;
+					}
+					return [obj1 localizedCaseInsensitiveCompare:obj2];
+				}];
+		
+		for (NSString* ivarName in keys)
+		{
+			id value = [ivars objectForKey:ivarName];
+			[desc appendFormat:@"  %@ = %@%@", ivarName, [QuickLookHelper formattedStringForValue:value varName:ivarName], delimiter];
+		}
 	}
-	[desc appendFormat:@"%@filteringMode:%@", delimiter, filteringMode];
-
-	[desc appendFormat:@"%@usesMipmaps:%@%@isData:%@%@isPath:%@%@isRotated:%@%@isCompressed:%@",
-	 delimiter, NSStringFromBool(self.usesMipmaps), delimiter, NSStringFromBool([[self valueForKey:@"isData"] boolValue]), delimiter, NSStringFromBool([[self valueForKey:@"isPath"] boolValue]),
-	 delimiter, NSStringFromBool([[self valueForKey:@"isRotated"] boolValue]), delimiter, NSStringFromBool([[self valueForKey:@"isCompressed"] boolValue])];
-	[self descriptionForTextureCache:[self valueForKey:@"textureCache"] delimiter:delimiter desc:desc];
-	[desc appendFormat:@"%@originalAtlasName:%@%@originalTexture:%@", delimiter, [self valueForKey:@"originalAtlasName"], delimiter, [self valueForKey:@"originalTexture"]];
-	[desc appendFormat:@"%@subTextureName:%@", delimiter, [self valueForKey:@"subTextureName"]];
-
+	
+	NSLog(@"desc: \n%@ \n", desc);
+	
 	return desc;
 }
 
--(void) descriptionForTextureCache:(id)texCache delimiter:(NSString*)delimiter desc:(NSMutableString*)desc
-{
-	[desc appendFormat:@"%@textureCache:[<%@: %p>", delimiter, NSStringFromClass([texCache class]), texCache];
-	[desc appendFormat:@"%@size:%@%@pixelSize:%@", delimiter, NSShortStringFromCGSize([[texCache valueForKey:@"size"] CGSizeValue]),
-	 delimiter, NSShortStringFromCGSize([[texCache valueForKey:@"pixelSize"] CGSizeValue])];
-	[desc appendFormat:@"%@isLoaded:%@%@hasAlpha:%@%@isPOT:%@", delimiter, NSStringFromBool([[texCache valueForKey:@"isLoaded"] boolValue]),
-	 delimiter, NSStringFromBool([[texCache valueForKey:@"hasAlpha"] boolValue]), delimiter, NSStringFromBool([[texCache valueForKey:@"isPOT"] boolValue])];
-	[desc appendString:@"]"];
-}
-
--(id) debugQuickLookObject
-{
-	return [self debugDescriptionWithDelimiter:@"\n"];
-}
-@end
-
-@implementation SKTextureAtlas (QuickLook)
-
--(NSString*) debugDescriptionWithDelimiter:(NSString*)delimiter
-{
-	NSMutableString* desc = [NSMutableString string];
-	[desc appendFormat:@"<%@: %p>", NSStringFromClass([self class]), self];
-	[desc appendFormat:@"%@atlasName:'%@'", delimiter, [self valueForKey:@"atlasName"]];
-	[desc appendFormat:@"%@textureNames:%@", delimiter, self.textureNames];
-	return desc;
-}
-
--(id) debugQuickLookObject
-{
-	return [self debugDescriptionWithDelimiter:@"\n"];
-}
 @end
