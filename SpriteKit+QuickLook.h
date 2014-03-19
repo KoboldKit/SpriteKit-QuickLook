@@ -12,7 +12,6 @@
 @end
 
 @interface SKNode (QuickLook)
--(NSString*) debugDescriptionWithDelimiter:(NSString*)delimiter;
 @end
 @interface SKScene (QuickLook)
 @end
@@ -23,10 +22,20 @@
 
 
 @interface SKTexture (QuickLook)
--(NSString*) debugDescriptionWithDelimiter:(NSString*)delimiter;
 @end
 @interface SKTextureAtlas (QuickLook)
--(NSString*) debugDescriptionWithDelimiter:(NSString*)delimiter;
 @end
-
-// more classes will be added over time ...
+@interface SKAction (QuickLook)
+@end
+@interface SKView (QuickLook)
+@end
+@interface SKPhysicsBody (QuickLook)
+@end
+@interface SKPhysicsWorld (QuickLook)
+@end
+@interface SKPhysicsJoint (QuickLook)
+@end
+@interface SKTransition (QuickLook)
+@end
+@interface SKKeyframeSequence (QuickLook)
+@end
