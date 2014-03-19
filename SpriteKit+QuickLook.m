@@ -53,6 +53,11 @@ static void dumpIvarNamesForClass(Class klass)
 }
 @end
 @implementation SKView (QuickLook)
+-(id) valueForUndefinedKey:(NSString*)key
+{
+	NSLog(@"SKView: KVC ignored undefined key '%@', returning nil", key);
+	return nil;
+}
 -(id) debugQuickLookObject
 {
 	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
@@ -134,6 +139,8 @@ static void dumpIvarNamesForClass(Class klass)
 		
 		SKNode* node = [SKLabelNode node];
 		NSLog(@"%@", [node debugQuickLookObject]);
+		SKView* view = [[SKView alloc] init];
+		NSLog(@"%@", [view debugQuickLookObject]);
 	}
 	return self;
 }
@@ -201,8 +208,10 @@ static void dumpIvarNamesForClass(Class klass)
 
 +(NSString*) formattedStringForValue:(id)value varName:(NSString*)varName
 {
+	// TODO: physics body bitMasks
+	
 	NSString* valueString = nil;
-	if ([varName isEqualToString:@"blendMode"])
+	if ([varName isEqualToString:@"blendMode"] || [varName isEqualToString:@"particleBlendMode"])
 	{
 		switch ([value integerValue]) {
 			case SKBlendModeAdd:
