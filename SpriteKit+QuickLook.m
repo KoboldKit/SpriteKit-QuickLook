@@ -227,7 +227,7 @@ static void dumpIvarNamesForClass(Class klass)
 				valueString = @"Subtract";
 				break;
 			default:
-				valueString = [NSString stringWithFormat:@"%d (unknown)", [value integerValue]];
+				valueString = [NSString stringWithFormat:@"%ld (unknown)", (unsigned long)[value integerValue]];
 				break;
 		}
 	}
@@ -247,7 +247,7 @@ static void dumpIvarNamesForClass(Class klass)
 				valueString = @"ResizeFill";
 				break;
 			default:
-				valueString = [NSString stringWithFormat:@"%d (unknown)", [value integerValue]];
+				valueString = [NSString stringWithFormat:@"%ld (unknown)", (unsigned long)[value integerValue]];
 				break;
 		}
 	}
@@ -267,7 +267,7 @@ static void dumpIvarNamesForClass(Class klass)
 				valueString = @"Top";
 				break;
 			default:
-				valueString = [NSString stringWithFormat:@"%d (unknown)", [value integerValue]];
+				valueString = [NSString stringWithFormat:@"%ld (unknown)", (unsigned long)[value integerValue]];
 				break;
 		}
 	}
@@ -284,7 +284,7 @@ static void dumpIvarNamesForClass(Class klass)
 				valueString = @"Right";
 				break;
 			default:
-				valueString = [NSString stringWithFormat:@"%d (unknown)", [value integerValue]];
+				valueString = [NSString stringWithFormat:@"%ld (unknown)", (unsigned long)[value integerValue]];
 				break;
 		}
 	}
@@ -298,7 +298,7 @@ static void dumpIvarNamesForClass(Class klass)
 				valueString = @"Nearest";
 				break;
 			default:
-				valueString = [NSString stringWithFormat:@"%d (unknown)", [value integerValue]];
+				valueString = [NSString stringWithFormat:@"%ld (unknown)", (unsigned long)[value integerValue]];
 				break;
 		}
 	}
