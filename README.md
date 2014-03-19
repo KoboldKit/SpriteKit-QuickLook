@@ -10,7 +10,7 @@ License: **MIT License**
 To use: 
 -------
 - add SpriteKit+QuickLook.h and .m to your project
-- while debugging, click on a variable's QuickLook (eye) icon or the info (i) icon (provided the variable is a reference of a Sprite Kit class)
+- while debugging, click on a Sprite Kit object variable's QuickLook (eye) icon or the info (i) icon (provided the variable is a reference of a Sprite Kit class)
 
 Learn more about Xcode 5.1 QuickLook here (has details on how to bring up the QuickLook view): 
 https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/CustomClassDisplay_in_QuickLook/CH01-quick_look_for_custom_objects/CH01-quick_look_for_custom_objects.html
