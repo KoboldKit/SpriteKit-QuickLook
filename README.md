@@ -8,9 +8,6 @@ These categories add QuickLook strings (requires Xcode 5.1+) to Sprite Kit nodes
 License: **MIT License**
 
 Watch a demo video (Sprite Kit demo at 1:03):
-
-<iframe width="560" height="315" src="//www.youtube-nocookie.com/embed/ToH4YbTSDAU?rel=0" frameborder="0" allowfullscreen></iframe>
-
 https://www.youtube.com/watch?v=ToH4YbTSDAU
 
 To use: 
