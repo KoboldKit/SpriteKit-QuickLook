@@ -24,7 +24,7 @@ To use the Summary strings:
 This is an unsupported, optional feature.
 
 - create or update ~/.lldbinit with the contents of the lldbinit file
-- copy or create a symlink of SpriteKitDebug.py in ~/SpriteKitDebug.py
+- copy SpriteKitDebug.py to ~/SpriteKitDebug.py (or create a symlink to SpriteKitDebug.py as ~/SpriteKitDebug.py)
 - restart Xcode
 
 The Xcode variables display should now show Sprite Kit objects' summary strings (description) next to the variable. This provides some useful context without having to go through QuickLook, for example a SKTexture object will display the texture name and size next to it, which is probably the most important info you need from an SKTexture object.
