@@ -12,30 +12,33 @@
 @end
 
 @interface SKNode (QuickLook)
+-(id) debugQuickLookObject;
 @end
-@interface SKScene (QuickLook)
-@end
-@interface SKSpriteNode (QuickLook)
-@end
-@interface SKLabelNode (QuickLook)
-@end
-
 
 @interface SKTexture (QuickLook)
+-(id) debugQuickLookObject;
 @end
 @interface SKTextureAtlas (QuickLook)
+-(id) debugQuickLookObject;
 @end
 @interface SKAction (QuickLook)
+-(id) debugQuickLookObject;
 @end
 @interface SKView (QuickLook)
+-(id) debugQuickLookObject;
 @end
 @interface SKPhysicsBody (QuickLook)
+-(id) debugQuickLookObject;
 @end
 @interface SKPhysicsWorld (QuickLook)
+-(id) debugQuickLookObject;
 @end
 @interface SKPhysicsJoint (QuickLook)
+-(id) debugQuickLookObject;
 @end
 @interface SKTransition (QuickLook)
+-(id) debugQuickLookObject;
 @end
 @interface SKKeyframeSequence (QuickLook)
+-(id) debugQuickLookObject;
 @end
