@@ -35,6 +35,11 @@ static void dumpIvarNamesForClass(Class klass)
 }
 @end
 @implementation SKTexture (QuickLook)
+-(id) valueForUndefinedKey:(NSString*)key
+{
+	NSLog(@"SKTexture: KVC ignored undefined key '%@', returning nil", key);
+	return nil;
+}
 -(id) debugQuickLookObject
 {
 	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
