@@ -153,8 +153,23 @@ def __lldb_init_module(debugger, dictionary):
 	debugger.HandleCommand('type summary add SKKeyframeSequence -F SpriteKitDebug.SK_Summary');
 	
 	debugger.HandleCommand('type summary add SKAction -F SpriteKitDebug.SK_Summary');
+	debugger.HandleCommand('type summary add SKAnimate -F SpriteKitDebug.SK_Summary');
+	debugger.HandleCommand('type summary add SKColorize -F SpriteKitDebug.SK_Summary');
+	debugger.HandleCommand('type summary add SKCustomAction -F SpriteKitDebug.SK_Summary');
+	debugger.HandleCommand('type summary add SKFade -F SpriteKitDebug.SK_Summary');
+	debugger.HandleCommand('type summary add SKFollowPath -F SpriteKitDebug.SK_Summary');
+	debugger.HandleCommand('type summary add SKGroup -F SpriteKitDebug.SK_Summary');
+	debugger.HandleCommand('type summary add SKMove -F SpriteKitDebug.SK_Summary');
+	debugger.HandleCommand('type summary add SKPerformSelector -F SpriteKitDebug.SK_Summary');
+	debugger.HandleCommand('type summary add SKPlaySound -F SpriteKitDebug.SK_Summary');
+	debugger.HandleCommand('type summary add SKRemove -F SpriteKitDebug.SK_Summary');
 	debugger.HandleCommand('type summary add SKRepeat -F SpriteKitDebug.SK_Summary');
+	debugger.HandleCommand('type summary add SKResize -F SpriteKitDebug.SK_Summary');
+	debugger.HandleCommand('type summary add SKRotate -F SpriteKitDebug.SK_Summary');
+	debugger.HandleCommand('type summary add SKRunAction -F SpriteKitDebug.SK_Summary');
 	debugger.HandleCommand('type summary add SKRunBlock -F SpriteKitDebug.SK_Summary');
+	debugger.HandleCommand('type summary add SKScale -F SpriteKitDebug.SK_Summary');
 	debugger.HandleCommand('type summary add SKSequence -F SpriteKitDebug.SK_Summary');
+	debugger.HandleCommand('type summary add SKSpeed -F SpriteKitDebug.SK_Summary');
 	debugger.HandleCommand('type summary add SKWait -F SpriteKitDebug.SK_Summary');
 
