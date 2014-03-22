@@ -314,7 +314,7 @@ static void dumpIvarNamesForClass(Class klass)
 +(NSString*) debugDescriptionStringWithDelimiter:(NSString*)delimiter spriteKitObject:(id)object
 {
 	NSMutableString* desc = [NSMutableString string];
-	[desc appendFormat:@"%@%@", object, [object debugDescription], delimiter];
+	[desc appendFormat:@"%@%@", [object debugDescription], delimiter];
 	
 	NSDictionary* classVars = [QuickLookHelper debugClassVarDictionaryForSpriteKitObject:object];
 	
