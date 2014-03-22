@@ -25,83 +25,59 @@ static void dumpIvarNamesForClass(Class klass)
 
 @interface QuickLookHelper ()
 +(NSString*) debugDescriptionStringWithDelimiter:(NSString*)delimiter spriteKitObject:(id)object;
++(NSString*) commonDebugDescriptionForSpriteKitObject:(id)object;
 @end
 
 
 @implementation SKNode (QuickLook)
--(id) debugQuickLookObject
-{
-	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
-}
+-(id) valueForUndefinedKey:(NSString*)key { NSLog(@"%@: KVC ignored undefined key '%@', returning nil", NSStringFromClass([self class]), key); return nil; }
+-(NSString*) debugDescription {	return [QuickLookHelper commonDebugDescriptionForSpriteKitObject:self]; }
+-(id) debugQuickLookObject { return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self]; }
 @end
 @implementation SKTexture (QuickLook)
--(id) valueForUndefinedKey:(NSString*)key
-{
-	NSLog(@"SKTexture: KVC ignored undefined key '%@', returning nil", key);
-	return nil;
-}
--(id) debugQuickLookObject
-{
-	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
-}
+-(id) valueForUndefinedKey:(NSString*)key { NSLog(@"%@: KVC ignored undefined key '%@', returning nil", NSStringFromClass([self class]), key); return nil; }
+-(NSString*) debugDescription {	return [QuickLookHelper commonDebugDescriptionForSpriteKitObject:self]; }
+-(id) debugQuickLookObject { return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self]; }
 @end
 @implementation SKTextureAtlas (QuickLook)
--(id) debugQuickLookObject
-{
-	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
-}
+-(id) valueForUndefinedKey:(NSString*)key { NSLog(@"%@: KVC ignored undefined key '%@', returning nil", NSStringFromClass([self class]), key); return nil; }
+-(NSString*) debugDescription {	return [QuickLookHelper commonDebugDescriptionForSpriteKitObject:self]; }
+-(id) debugQuickLookObject { return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self]; }
 @end
 @implementation SKAction (QuickLook)
--(id) valueForUndefinedKey:(NSString*)key
-{
-	NSLog(@"SKAction: KVC ignored undefined key '%@', returning nil", key);
-	return nil;
-}
--(id) debugQuickLookObject
-{
-	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
-}
+-(id) valueForUndefinedKey:(NSString*)key { NSLog(@"%@: KVC ignored undefined key '%@', returning nil", NSStringFromClass([self class]), key); return nil; }
+-(NSString*) debugDescription {	return [QuickLookHelper commonDebugDescriptionForSpriteKitObject:self]; }
+-(id) debugQuickLookObject { return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self]; }
 @end
 @implementation SKView (QuickLook)
--(id) valueForUndefinedKey:(NSString*)key
-{
-	NSLog(@"SKView: KVC ignored undefined key '%@', returning nil", key);
-	return nil;
-}
--(id) debugQuickLookObject
-{
-	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
-}
+-(id) valueForUndefinedKey:(NSString*)key { NSLog(@"%@: KVC ignored undefined key '%@', returning nil", NSStringFromClass([self class]), key); return nil; }
+-(NSString*) debugDescription {	return [QuickLookHelper commonDebugDescriptionForSpriteKitObject:self]; }
+-(id) debugQuickLookObject { return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self]; }
 @end
 @implementation SKPhysicsBody (QuickLook)
--(id) debugQuickLookObject
-{
-	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
-}
+-(id) valueForUndefinedKey:(NSString*)key { NSLog(@"%@: KVC ignored undefined key '%@', returning nil", NSStringFromClass([self class]), key); return nil; }
+-(NSString*) debugDescription {	return [QuickLookHelper commonDebugDescriptionForSpriteKitObject:self]; }
+-(id) debugQuickLookObject { return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self]; }
 @end
 @implementation SKPhysicsWorld (QuickLook)
--(id) debugQuickLookObject
-{
-	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
-}
+-(id) valueForUndefinedKey:(NSString*)key { NSLog(@"%@: KVC ignored undefined key '%@', returning nil", NSStringFromClass([self class]), key); return nil; }
+-(NSString*) debugDescription {	return [QuickLookHelper commonDebugDescriptionForSpriteKitObject:self]; }
+-(id) debugQuickLookObject { return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self]; }
 @end
 @implementation SKPhysicsJoint (QuickLook)
--(id) debugQuickLookObject
-{
-	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
-}
+-(id) valueForUndefinedKey:(NSString*)key { NSLog(@"%@: KVC ignored undefined key '%@', returning nil", NSStringFromClass([self class]), key); return nil; }
+-(NSString*) debugDescription {	return [QuickLookHelper commonDebugDescriptionForSpriteKitObject:self]; }
+-(id) debugQuickLookObject { return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self]; }
 @end
 @implementation SKTransition (QuickLook)
--(id) debugQuickLookObject
-{
-	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
-}
+-(id) valueForUndefinedKey:(NSString*)key { NSLog(@"%@: KVC ignored undefined key '%@', returning nil", NSStringFromClass([self class]), key); return nil; }
+-(NSString*) debugDescription {	return [QuickLookHelper commonDebugDescriptionForSpriteKitObject:self]; }
+-(id) debugQuickLookObject { return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self]; }
 @end
 @implementation SKKeyframeSequence (QuickLook)
--(id) debugQuickLookObject
-{
-	return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self];
-}
+-(id) valueForUndefinedKey:(NSString*)key { NSLog(@"%@: KVC ignored undefined key '%@', returning nil", NSStringFromClass([self class]), key); return nil; }
+-(NSString*) debugDescription {	return [QuickLookHelper commonDebugDescriptionForSpriteKitObject:self]; }
+-(id) debugQuickLookObject { return [QuickLookHelper debugDescriptionStringWithDelimiter:@"\n" spriteKitObject:self]; }
 @end
 
 
@@ -145,12 +121,14 @@ static void dumpIvarNamesForClass(Class klass)
 		 dumpIvarNamesForClass(NSClassFromString(@"SKBitmapFont"));
 		 */
 		
-		dumpIvarNamesForClass([SKLabelNode class]);
+		//dumpIvarNamesForClass([SKLabelNode class]);
 		
+		/*
 		SKNode* node = [SKLabelNode node];
 		NSLog(@"%@", [node debugQuickLookObject]);
 		SKView* view = [[SKView alloc] init];
 		NSLog(@"%@", [view debugQuickLookObject]);
+		 */
 	}
 	return self;
 }
@@ -336,7 +314,7 @@ static void dumpIvarNamesForClass(Class klass)
 +(NSString*) debugDescriptionStringWithDelimiter:(NSString*)delimiter spriteKitObject:(id)object
 {
 	NSMutableString* desc = [NSMutableString string];
-	[desc appendFormat:@"%@%@", [object debugDescription], delimiter];
+	[desc appendFormat:@"%@%@", object, [object debugDescription], delimiter];
 	
 	NSDictionary* classVars = [QuickLookHelper debugClassVarDictionaryForSpriteKitObject:object];
 	
@@ -369,6 +347,11 @@ static void dumpIvarNamesForClass(Class klass)
 	//NSLog(@"desc: \n%@ \n", desc);
 	
 	return desc;
+}
+
++(NSString*) commonDebugDescriptionForSpriteKitObject:(id)object
+{
+	return [NSString stringWithFormat:@"<%p> %@", object, [object description]];
 }
 
 @end
