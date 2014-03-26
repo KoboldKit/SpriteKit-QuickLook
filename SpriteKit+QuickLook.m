@@ -88,6 +88,9 @@ static void dumpIvarNamesForClass(Class klass)
 	self = [super init];
 	if (self)
 	{
+		// avoid compiler warning
+		dumpIvarNamesForClass([SKNode class]);
+		
 		/*
 		 dumpIvarNamesForClass([SKAction class]);
 		 dumpIvarNamesForClass([SKKeyframeSequence class]);
